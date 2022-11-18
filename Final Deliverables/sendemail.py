@@ -1,9 +1,12 @@
 import smtplib
 import sendgrid
 import os
+from dotenv import dotenv_values
 from sendgrid.helpers.mail import Mail, Email, To, Content
 SUBJECT = "Interview Call"
 s = smtplib.SMTP('smtp.gmail.com', 587)
+envData=dotenv_values("./.env")
+mailApi=envData['MAILAPI']
 
 def sendmail(TEXT,email):
     print("sorry we cant process your candidature")
@@ -14,10 +17,10 @@ def sendmail(TEXT,email):
     s.sendmail("il.prethi@gmail.com", email, message)
     s.quit()
 def sendgridmail(user,TEXT):
-    sg = sendgrid.SendGridAPIClient('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')
-    from_email = Email("santhiya@.com")  # Change to your verified sender
+    sg = sendgrid.SendGridAPIClient(mailApi)
+    from_email = Email("sankarannamalai01@gmail.com")  # Change to your verified sender
     to_email = To(user)  # Change to your recipient
-    subject = "Sending with SendGrid is Fun"
+    subject = "Mail from IMS"
     content = Content("text/plain",TEXT)
     mail = Mail(from_email, to_email, subject, content)
 

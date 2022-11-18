@@ -1,8 +1,8 @@
-FROM python:3.6
+FROM python:3.6-slim
 WORKDIR /app
 ADD . /app
+RUN apt update && apt install make build-essential libxml2 -y
 COPY requirements.txt /app
-RUN python3 -m pip install -r requirements.txt
-RUN python3 -m pip install ibm_db
+RUN pip3 install -r requirements.txt
 EXPOSE 5000
 CMD ["python","app.py"]
