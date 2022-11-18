@@ -4,11 +4,17 @@ import sqlite3 as sql
 import re
 import alert 
 from sendemail import sendmail,sendgridmail
+from dotenv import dotenv_values
 app = Flask(__name__)
-  
+envData=dotenv_values("./.env")
+hostname=envData["HOSTNAME"]
+port=envData["PORT"]
+uid=envData["UID"]
+pwd=envData["PWD"]
 app.secret_key = 'a'
+creds = "DATABASE=bludb;HOSTNAME=%s;PORT=%s;SECURITY=SSL;SSLServerCertificate=./DigiCertGlobalRootCA.crt;UID=%s;PWD=%s"%(hostname,port,uid,pwd)
 
-conn = ibm_db.connect("DATABASE=bludb;HOSTNAME=3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud;PORT=31498;SECURITY=SSL;SSLServerCertificate=./DigiCertGlobalRootCA.crt;UID=lhy73704;PWD=hLl73rbl0lMX1M1Y",'','')
+conn = ibm_db.connect(creds,'','')
 print(conn)
 print("Connecting Successful!!!!!!!!")
 
